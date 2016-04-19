@@ -25,6 +25,8 @@ void MainWindow::on_leftConnectButton_toggled(bool checked) {
                 mLeftPort->setBaudRate(ui->leftPortBaud->value());
 
                 ui->leftConnectButton->setText("Disconnect");
+                ui->leftPortName->setEnabled(false);
+                ui->leftPortBaud->setEnabled(false);
                 mLeftTxCounter = 0;
                 ui->leftTXCounter->setText(QString("%1").arg(mLeftTxCounter));
                 mLeftRxCounter = 0;
@@ -41,6 +43,8 @@ void MainWindow::on_leftConnectButton_toggled(bool checked) {
         if(mLeftPort->isOpen()) {
             mLeftPort->close();
             ui->leftConnectButton->setText("Connect");
+            ui->leftPortName->setEnabled(true);
+            ui->leftPortBaud->setEnabled(true);
         }
     }
 }
@@ -53,6 +57,8 @@ void MainWindow::on_rightConnectButton_toggled(bool checked) {
             bool res = mRightPort->bind(QHostAddress::Any, mRightRemotePort);
             if(res) {
                 ui->rightConnectButton->setText("Disconnect");
+                ui->rightRemoteIP->setEnabled(false);
+                ui->rightRemotePort->setEnabled(false);
                 mRightTxCounter = 0;
                 ui->rightTXCounter->setText(QString("%1").arg(mRightTxCounter));
                 mRightRxCounter = 0;
@@ -64,6 +70,8 @@ void MainWindow::on_rightConnectButton_toggled(bool checked) {
         if(mRightPort->state() == QAbstractSocket::BoundState) {
             mRightPort->disconnectFromHost();
             ui->rightConnectButton->setText("Connect");
+            ui->rightRemoteIP->setEnabled(true);
+            ui->rightRemotePort->setEnabled(true);
         }
     }
 }
